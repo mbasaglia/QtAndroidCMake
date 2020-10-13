@@ -257,7 +257,14 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
     )
     # 3. Configure build.gradle to properly work with Android Studio import
     set(QT_ANDROID_NATIVE_API_LEVEL ${ANDROID_NATIVE_API_LEVEL})
-    configure_file(${QT_ANDROID_SOURCE_DIR}/build.gradle.in ${QT_ANDROID_APP_BINARY_DIR}/build.gradle @ONLY)
+    if(${Qt5Core_VERSION} VERSION_GREATER_EQUAL 5.15)
+        set(QT_ANDROID_BUILD_GRADLE_FILE build.gradle.5.15)
+    elseif(${Qt5Core_VERSION} VERSION_GREATER_EQUAL 5.14)
+        set(QT_ANDROID_BUILD_GRADLE_FILE build.gradle.5.14)
+    else()
+        set(QT_ANDROID_BUILD_GRADLE_FILE build.gradle)
+    endif()
+    configure_file(${QT_ANDROID_SOURCE_DIR}/${QT_ANDROID_BUILD_GRADLE_FILE} ${QT_ANDROID_APP_BINARY_DIR}/build.gradle @ONLY)
 
     # check if the apk must be signed
     if(ARG_KEYSTORE)
