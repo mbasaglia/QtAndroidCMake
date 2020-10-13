@@ -291,6 +291,7 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         DEPENDS ${SOURCE_TARGET}
         ${QT_ANDROID_PRE_COMMANDS}
         # it seems that recompiled libraries are not copied if we don't remove them first
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${SOURCE_TARGET}> .
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${QT_ANDROID_APP_BINARY_DIR}/libs/${ANDROID_ABI}
         COMMAND ${CMAKE_COMMAND} -E make_directory ${QT_ANDROID_APP_BINARY_DIR}/libs/${ANDROID_ABI}
         COMMAND ${CMAKE_COMMAND} -E copy ${QT_ANDROID_APP_PATH} ${QT_ANDROID_APP_BINARY_DIR}/libs/${ANDROID_ABI}
