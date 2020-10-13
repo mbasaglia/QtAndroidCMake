@@ -48,6 +48,8 @@ endif()
 string(REPLACE "\\" "/" QT_ANDROID_NDK_ROOT ${QT_ANDROID_NDK_ROOT}) # androiddeployqt doesn't like backslashes in paths
 message(STATUS "Found Android NDK: ${QT_ANDROID_NDK_ROOT}")
 
+message(STATUS "ANDROID_PLATFORM_LEVEL : ${ANDROID_PLATFORM_LEVEL}")
+
 include(CMakeParseArguments)
 
 # define a macro to create an Android APK target
