@@ -48,7 +48,10 @@ endif()
 string(REPLACE "\\" "/" QT_ANDROID_NDK_ROOT ${QT_ANDROID_NDK_ROOT}) # androiddeployqt doesn't like backslashes in paths
 message(STATUS "Found Android NDK: ${QT_ANDROID_NDK_ROOT}")
 
-message(STATUS "ANDROID_PLATFORM_LEVEL : ${ANDROID_PLATFORM_LEVEL}")
+message(STATUS "ANDROID_NATIVE_API_LEVEL : ${ANDROID_NATIVE_API_LEVEL}")
+message(STATUS "ANDROID_PLATFORM : ${ANDROID_PLATFORM} (should be the same as ANDROID_NATIVE_API_LEVEL)")
+message(STATUS "ANDROID_STL : ${ANDROID_STL}")
+message(STATUS "ANDROID_ABI : ${ANDROID_ABI}")
 
 include(CMakeParseArguments)
 
