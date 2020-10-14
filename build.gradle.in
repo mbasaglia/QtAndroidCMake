@@ -62,5 +62,7 @@ android {
 
     defaultConfig {
         resConfigs "en"
+        minSdkVersion = qtMinSdkVersion
+        targetSdkVersion = @QT_ANDROID_NATIVE_API_LEVEL@
     }
 }
