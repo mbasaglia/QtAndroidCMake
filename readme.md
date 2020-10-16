@@ -65,7 +65,7 @@ You can then run CMake:.
 **On Windows**
 ```
 cmake -G"MinGW Makefiles"
-      -DCMAKE_TOOLCHAIN_FILE="%ANDROID_NDK%/build/cmake/android.toolchain.cmake" 
+      -DCMAKE_TOOLCHAIN_FILE="%ANDROID_NDK%/build/cmake/android.toolchain.cmake"
       -DCMAKE_MAKE_PROGRAM="%ANDROID_NDK%/prebuilt/windows-x86_64/bin/make.exe" .
 ```
 
@@ -145,13 +145,14 @@ add_qt_android_apk(my_app_apk my_app
 
 ### KEYSTORE
 
-The path to a keystore file and an alias, for signing the APK. If not provided, the APK won't be signed.
+The path to a keystore file, for signing the APK. If not provided, the APK won't be signed.
 
 Example:
 
 ```cmake
 add_qt_android_apk(my_app_apk my_app
-    KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
+    KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore
+    KEY_ALIAS myalias
 )
 ```
 
@@ -163,10 +164,31 @@ Example:
 
 ```cmake
 add_qt_android_apk(my_app_apk my_app
-    KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
+    KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore
+    KEY_ALIAS myalias
     KEYSTORE_PASSWORD xxxxx
 )
 ```
+
+### KEY_PASSWORD
+
+The password associated to the given alias. Note that this option is only considered if the ```KEYSTORE``` argument is used. This is only useful is the key password is different than `KEYSTORE_PASSWORD`
+
+Example:
+
+```cmake
+add_qt_android_apk(my_app_apk my_app
+    KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore
+    KEY_ALIAS myalias
+    KEYSTORE_PASSWORD xxxxx
+    KEY_PASSWORD yyyyy
+)
+```
+
+### QML_DIR
+
+Directory scanned for qml import, by default it is the source directory.
+You should point it to your real qml file to have optimal apk size.
 
 ### DEPENDS
 
@@ -194,7 +216,7 @@ add_qt_android_apk(my_app_apk my_app
 
 ## Troubleshooting
 
-In case of 
+In case of
 ```
 -- Configuring done
 CMake Error in CMakeLists.txt:

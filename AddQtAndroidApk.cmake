@@ -67,6 +67,7 @@ include(CMakeParseArguments)
 #     KEYSTORE_PASSWORD xxxx
 #     KEY_ALIAS myalias
 #     KEY_PASSWORD xxxx
+#     QML_DIR path/to/qml
 #     DEPENDS a_linked_target "path/to/a_linked_library.so" ...
 #     INSTALL
 #)
