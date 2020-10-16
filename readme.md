@@ -62,6 +62,19 @@ Additionally you can define the following ones, but you can also define them as 
 
 You can then run CMake:.
 
+#### Android toolchain parameters
+
+* **ANDROID_ABI**: `'armeabi-v7a'` or `'arm64-v8a'` or `'x86_64'`
+* **ANDROID_TOOLCHAIN**: Recommanded is `clang`
+* **ANDROID_STL**: Recommanded is `c++_shared`
+* **ANDROID_BUILDTOOLS_REVISION**: Recommanded version is `'28.0.3'`
+* **ANDROID_NATIVE_API_LEVEL**: Api level to build the apk with.
+    * Android 7: 23
+    * Android 8: 26
+    * Android 9: 28
+    * Android 10: 29
+
+
 **On Windows**
 ```
 cmake -G"MinGW Makefiles"
