@@ -63,8 +63,10 @@ include(CMakeParseArguments)
 #     VERSION_CODE 12
 #     PACKAGE_NAME "org.mycompany.myapp"
 #     PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/my-android-sources
-#     KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
+#     KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore
 #     KEYSTORE_PASSWORD xxxx
+#     KEY_ALIAS myalias
+#     KEY_PASSWORD xxxx
 #     DEPENDS a_linked_target "path/to/a_linked_library.so" ...
 #     INSTALL
 #)
@@ -72,7 +74,7 @@ include(CMakeParseArguments)
 macro(add_qt_android_apk TARGET SOURCE_TARGET)
 
     # parse the macro arguments
-    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;QML_DIR" "DEPENDS;KEYSTORE" ${ARGN})
+    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE;KEYSTORE_PASSWORD;KEY_PASSWORD;KEY_ALIAS;QML_DIR" "DEPENDS" ${ARGN})
 
     # extract the full path of the source target binary
     set(QT_ANDROID_APP_PATH "$<TARGET_FILE:${SOURCE_TARGET}>")  # full file path to the app's main shared library
@@ -284,9 +286,12 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
 
     # check if the apk must be signed
     if(ARG_KEYSTORE)
-        set(SIGN_OPTIONS --sign ${ARG_KEYSTORE})
+        set(SIGN_OPTIONS --sign ${ARG_KEYSTORE} ${ARG_KEY_ALIAS})
         if(ARG_KEYSTORE_PASSWORD)
             set(SIGN_OPTIONS ${SIGN_OPTIONS} --storepass ${ARG_KEYSTORE_PASSWORD})
+        endif()
+        if(ARG_KEY_PASSWORD)
+            set(SIGN_OPTIONS ${SIGN_OPTIONS} --keypass ${ARG_KEY_PASSWORD})
         endif()
     endif()
 
@@ -303,7 +308,11 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
     # determine the build type to pass to androiddeployqt
     if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND NOT ARG_KEYSTORE)
         set(QT_ANDROID_BUILD_TYPE --debug)
-    elseif()
+    else()
+        message(STATUS "KEYSTORE : ${ARG_KEYSTORE}")
+        message(STATUS "KEYSTORE_PASSWORD : ${ARG_KEYSTORE_PASSWORD}")
+        message(STATUS "KEY_ALIAS : ${ARG_KEY_ALIAS}")
+        message(STATUS "KEY_PASSWORD : ${ARG_KEY_PASSWORD}")
         set(QT_ANDROID_BUILD_TYPE --release)
     endif()
 
