@@ -349,6 +349,7 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         --output ${QT_ANDROID_APP_BINARY_DIR}
         --input ${CMAKE_CURRENT_BINARY_DIR}/qtdeploy.json
         --gradle
+        --jdk ${JAVA_HOME}
         ${QT_ANDROID_BUILD_TYPE}
         ${TARGET_LEVEL_OPTIONS}
         ${INSTALL_OPTIONS}
