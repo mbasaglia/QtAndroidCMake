@@ -321,12 +321,14 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
     # determine the build type to pass to androiddeployqt
     if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND NOT ARG_KEYSTORE)
         set(QT_ANDROID_BUILD_TYPE --debug)
+        set(QT_ANDROID_OUTPUT "debug/${SOURCE_TARGET}-${ANDROID_ABI}-debug.apk")
     else()
         message(STATUS "KEYSTORE : ${ARG_KEYSTORE}")
         message(STATUS "KEYSTORE_PASSWORD : ${ARG_KEYSTORE_PASSWORD}")
         message(STATUS "KEY_ALIAS : ${ARG_KEY_ALIAS}")
         message(STATUS "KEY_PASSWORD : ${ARG_KEY_PASSWORD}")
         set(QT_ANDROID_BUILD_TYPE --release)
+        set(QT_ANDROID_OUTPUT "release/${SOURCE_TARGET}-${ANDROID_ABI}-signed.apk")
     endif()
 
     # create a custom command that will run the androiddeployqt utility to prepare the Android package
@@ -351,4 +353,8 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         ${SIGN_OPTIONS}
     )
 
+    set_target_properties(
+        ${TARGET}
+        PROPERTIES apk "${CMAKE_CURRENT_BINARY_DIR}/${SOURCE_TARGET}-${ANDROID_ABI}/build/outputs/apk/${QT_ANDROID_OUTPUT}"
+    )
 endmacro()
