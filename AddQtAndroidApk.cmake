@@ -5,9 +5,11 @@ set(QT_ANDROID_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # check the JAVA_HOME environment variable
 # (I couldn't find a way to set it from this script, it has to be defined outside)
-set(JAVA_HOME $ENV{JAVA_HOME})
 if(NOT JAVA_HOME)
-    message(FATAL_ERROR "The JAVA_HOME environment variable is not set. Please set it to the root directory of the JDK.")
+    set(JAVA_HOME $ENV{JAVA_HOME})
+    if(NOT JAVA_HOME)
+        message(FATAL_ERROR "The JAVA_HOME environment variable is not set. Please set it to the root directory of the JDK.")
+    endif()
 endif()
 
 # make sure that the Android toolchain is used
@@ -351,6 +353,11 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         ${TARGET_LEVEL_OPTIONS}
         ${INSTALL_OPTIONS}
         ${SIGN_OPTIONS}
+    )
+
+    set_target_properties(
+        ${TARGET}
+        PROPERTIES assets "${CMAKE_CURRENT_BINARY_DIR}/${SOURCE_TARGET}-${ANDROID_ABI}/assets/"
     )
 
     set_target_properties(
