@@ -26,9 +26,10 @@ message(STATUS "Found Qt for Android: ${QT_ANDROID_QT_ROOT}")
 
 # find the Android SDK
 if(NOT QT_ANDROID_SDK_ROOT)
-    set(QT_ANDROID_SDK_ROOT $ENV{ANDROID_SDK})
+    set(QT_ANDROID_SDK_ROOT ${ANDROID_SDK})
+
     if(NOT QT_ANDROID_SDK_ROOT)
-        set(QT_ANDROID_SDK_ROOT $ENV{ANDROID_SDK_ROOT})
+        set(QT_ANDROID_SDK_ROOT $ENV{ANDROID_SDK})
         if(NOT QT_ANDROID_SDK_ROOT)
             message(FATAL_ERROR "Could not find the Android SDK. Please set either the ANDROID_SDK environment variable, or the QT_ANDROID_SDK_ROOT CMake variable to the root directory of the Android SDK")
         endif()
@@ -39,9 +40,9 @@ message(STATUS "Found Android SDK: ${QT_ANDROID_SDK_ROOT}")
 
 # find the Android NDK
 if(NOT QT_ANDROID_NDK_ROOT)
-    set(QT_ANDROID_NDK_ROOT $ENV{ANDROID_NDK})
+    set(QT_ANDROID_NDK_ROOT ${ANDROID_NDK})
     if(NOT QT_ANDROID_NDK_ROOT)
-        set(QT_ANDROID_NDK_ROOT ${ANDROID_NDK})
+        set(QT_ANDROID_NDK_ROOT $ENV{ANDROID_NDK})
         if(NOT QT_ANDROID_NDK_ROOT)
             message(FATAL_ERROR "Could not find the Android NDK. Please set either the ANDROID_NDK environment or CMake variable, or the QT_ANDROID_NDK_ROOT CMake variable to the root directory of the Android NDK")
         endif()
